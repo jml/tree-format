@@ -17,6 +17,8 @@
 
 """Library for formatting trees."""
 
+import itertools
+
 
 FORK = u'\u251c'
 LAST = u'\u2514'
@@ -24,17 +26,27 @@ VERTICAL = u'\u2502'
 HORIZONTAL = u'\u2500'
 
 
-def _format_tree(node, format_node, get_children):
-    yield format_node(node)
+def _format_tree(node, format_node, get_children, prefix=''):
     children = get_children(node)
+    next_prefix = ''.join([prefix, VERTICAL, '   '])
     for child in children[:-1]:
-        yield ''.join([FORK, HORIZONTAL, HORIZONTAL, ' ', format_node(child)])
+        yield ''.join([prefix, FORK, HORIZONTAL, HORIZONTAL, ' ', format_node(child)])
+        for result in _format_tree(child, format_node, get_children, next_prefix):
+            yield result
     if children:
-        yield ''.join([LAST, HORIZONTAL, HORIZONTAL, ' ', format_node(children[-1])])
+        last_prefix = ''.join([prefix, '    '])
+        yield ''.join([prefix, LAST, HORIZONTAL, HORIZONTAL, ' ', format_node(children[-1])])
+        for result in _format_tree(children[-1], format_node, get_children, last_prefix):
+            yield result
 
 
 def format_tree(node, format_node, get_children):
-    return u'\n'.join(_format_tree(node, format_node, get_children)) + u'\n'
+    lines = itertools.chain(
+        [format_node(node)],
+        _format_tree(node, format_node, get_children),
+        [''],
+    )
+    return u'\n'.join(lines)
 
 
 def print_tree():

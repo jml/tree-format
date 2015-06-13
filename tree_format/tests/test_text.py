@@ -51,3 +51,45 @@ class TestFormatTree(TestCase):
         ├── baz
         └── qux
         '''), output)
+
+    def test_multi_level_tree(self):
+        tree = (
+            'foo', [
+                ('bar', [
+                    ('a', []),
+                    ('b', []),
+                ]),
+                ('baz', []),
+                ('qux', []),
+            ],
+        )
+        output = self.format_tree(tree)
+        self.assertEqual(dedent(u'''\
+        foo
+        ├── bar
+        │   ├── a
+        │   └── b
+        ├── baz
+        └── qux
+        '''), output)
+
+    def test_multi_level_on_last_node_tree(self):
+        tree = (
+            'foo', [
+                ('bar', []),
+                ('baz', []),
+                ('qux', [
+                    ('a', []),
+                    ('b', []),
+                ]),
+            ],
+        )
+        output = self.format_tree(tree)
+        self.assertEqual(dedent(u'''\
+        foo
+        ├── bar
+        ├── baz
+        └── qux
+            ├── a
+            └── b
+        '''), output)
