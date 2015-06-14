@@ -1,6 +1,45 @@
 Python library to generate nicely formatted trees, like the UNIX `tree`
 command.
 
+## Example
+
+Produce output like this:
+
+```
+foo
+├── bar
+│   ├── a
+│   └── b
+├── baz
+└── qux
+    └── c
+```
+
+using code like this:
+
+```python
+import operator
+
+from tree_format import print_tree
+
+tree = (
+    'foo', [
+        ('bar', [
+            ('a', []),
+            ('b', []),
+        ]),
+        ('baz', []),
+        ('qux', [
+            ('c', []),
+        ]),
+    ],
+)
+
+print format_tree(
+    tree, format_node=itemgetter(0), get_children=itemgetter(1))
+
+```
+
 ## License
 
 This is made available under the Apache Software License, version 2.0.
