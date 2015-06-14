@@ -49,5 +49,5 @@ def format_tree(node, format_node, get_children):
     return u'\n'.join(lines)
 
 
-def print_tree():
-    print format_tree()
+def print_tree(node, format_node, get_children):
+    print format_tree(node, format_tree, get_children)
