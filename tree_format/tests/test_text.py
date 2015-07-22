@@ -20,7 +20,7 @@ from operator import itemgetter
 from textwrap import dedent
 
 from hypothesis import given
-from hypothesis.strategies import text
+from hypothesis.strategies import integers, just, text, tuples, lists
 
 from testtools import TestCase
 from testtools.matchers import DocTestMatches
@@ -28,6 +28,35 @@ from testtools.matchers import DocTestMatches
 from .._text import (
     format_tree,
 )
+
+
+def generate_tree(depth):
+    """Make a tree of the given depth.
+
+    e.g.
+    ('foo',
+      [('bar',
+        [('qux', []),
+         ('baz', []),
+        ]),
+       ('shop',
+        [('pet', [])]),
+      ],
+    )
+    """
+    if depth < 1:
+        raise ValueError('Cannot make tree of depth {}'.format(depth))
+    if depth == 1:
+        return tuples(text(), just([]))
+    else:
+        return tuples(text(), lists(generate_tree(depth - 1), max_size=5))
+
+
+def traverse_depth_first(tree, format_node, get_children):
+    yield format_node(tree)
+    for child in get_children(tree):
+        for node in traverse_depth_first(child, format_node, get_children):
+            yield node
 
 
 class TestFormatTree(TestCase):
@@ -40,6 +69,15 @@ class TestFormatTree(TestCase):
         tree = (label, [])
         output = self.format_tree(tree)
         self.assertEqual(u'{}\n'.format(label), output)
+
+    @given(integers(min_value=1, max_value=10).flatmap(generate_tree))
+    def test_labels_appear_in_order(self, tree):
+        output = self.format_tree(tree)
+        index = 0
+        dfs_nodes = traverse_depth_first(tree, itemgetter(0), itemgetter(1))
+        for label in dfs_nodes:
+            index = output[index:].find(label)
+            self.assertNotEqual(-1, index)
 
     def test_single_level_tree(self):
         tree = (
