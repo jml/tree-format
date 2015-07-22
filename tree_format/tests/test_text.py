@@ -16,7 +16,11 @@
 
 import doctest
 from operator import itemgetter
+
 from textwrap import dedent
+
+from hypothesis import given
+from hypothesis.strategies import text
 
 from testtools import TestCase
 from testtools.matchers import DocTestMatches
@@ -31,12 +35,11 @@ class TestFormatTree(TestCase):
     def format_tree(self, tree):
         return format_tree(tree, itemgetter(0), itemgetter(1))
 
-    def test_single_node_tree(self):
-        tree = ('foo', [])
+    @given(text())
+    def test_single_node_tree(self, label):
+        tree = (label, [])
         output = self.format_tree(tree)
-        self.assertEqual(dedent(u'''\
-        foo
-        '''), output)
+        self.assertEqual(u'{}\n'.format(label), output)
 
     def test_single_level_tree(self):
         tree = (
