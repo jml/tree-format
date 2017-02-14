@@ -26,7 +26,7 @@ VERTICAL = u'\u2502'
 HORIZONTAL = u'\u2500'
 
 
-def _format_tree(node, format_node, get_children, prefix=''):
+def _format_tree(node, format_node, get_children, prefix=u''):
     children = get_children(node)
     next_prefix = u''.join([prefix, VERTICAL, u'   '])
     for child in children[:-1]:
@@ -50,4 +50,4 @@ def format_tree(node, format_node, get_children):
 
 
 def print_tree(*args, **kwargs):
-    print format_tree(*args, **kwargs)
+    print(format_tree(*args, **kwargs))
