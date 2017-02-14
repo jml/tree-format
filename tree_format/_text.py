@@ -27,7 +27,7 @@ HORIZONTAL = u'\u2500'
 
 
 def _format_tree(node, format_node, get_children, prefix=u''):
-    children = get_children(node)
+    children = list(get_children(node))
     next_prefix = u''.join([prefix, VERTICAL, u'   '])
     for child in children[:-1]:
         yield u''.join([prefix,
