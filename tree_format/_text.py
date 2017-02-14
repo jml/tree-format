@@ -30,13 +30,29 @@ def _format_tree(node, format_node, get_children, prefix=''):
     children = get_children(node)
     next_prefix = u''.join([prefix, VERTICAL, u'   '])
     for child in children[:-1]:
-        yield u''.join([prefix, FORK, HORIZONTAL, HORIZONTAL, u' ', format_node(child)])
-        for result in _format_tree(child, format_node, get_children, next_prefix):
+        yield u''.join([prefix,
+                        FORK,
+                        HORIZONTAL,
+                        HORIZONTAL,
+                        u' ',
+                        format_node(child)])
+        for result in _format_tree(child,
+                                   format_node,
+                                   get_children,
+                                   next_prefix):
             yield result
     if children:
         last_prefix = u''.join([prefix, u'    '])
-        yield u''.join([prefix, LAST, HORIZONTAL, HORIZONTAL, u' ', format_node(children[-1])])
-        for result in _format_tree(children[-1], format_node, get_children, last_prefix):
+        yield u''.join([prefix,
+                        LAST,
+                        HORIZONTAL,
+                        HORIZONTAL,
+                        u' ',
+                        format_node(children[-1])])
+        for result in _format_tree(children[-1],
+                                   format_node,
+                                   get_children,
+                                   last_prefix):
             yield result
 
 
