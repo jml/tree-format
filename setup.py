@@ -43,4 +43,7 @@ setup(
     author_email="jml@mumak.net",
     classifiers=classifiers,
     url="http://github.com/jml/tree-format",
+    extras_require={
+        "dev": ["pytest>=2.7.1", "testtools>=1.8.0"],
+    },
 )
