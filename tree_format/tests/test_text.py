@@ -106,7 +106,6 @@ class TestFormatTree(TestCase):
                 doctest.NORMALIZE_WHITESPACE |
                 doctest.REPORT_NDIFF))
 
-
     def test_newlines(self):
         tree = (
             'foo', [

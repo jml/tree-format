@@ -40,7 +40,6 @@ def _format_newlines(prefix, formatted_node):
     return formatted_node.replace(u'\n', replacement)
 
 
-
 def _format_tree(node, format_node, get_children, prefix=u''):
     children = list(get_children(node))
     next_prefix = u''.join([prefix, VERTICAL, u'   '])
