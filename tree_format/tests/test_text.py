@@ -106,6 +106,31 @@ class TestFormatTree(TestCase):
                 doctest.NORMALIZE_WHITESPACE |
                 doctest.REPORT_NDIFF))
 
+    def test_newlines(self):
+        tree = (
+            'foo', [
+                ('bar\nfrob', [
+                    ('a', []),
+                    ('b\nc\nd', []),
+                ]),
+                ('baz', []),
+                ('qux\nfrab', []),
+            ],
+        )
+        output = self.format_tree(tree)
+        self.assertEqual(dedent(u'''\
+        foo
+        ├── bar⏎
+        │   frob
+        │   ├── a
+        │   └── b⏎
+        │       c⏎
+        │       d
+        ├── baz
+        └── qux⏎
+            frab
+        '''), output)
+
 
 def d(name, files):
     return (name, files)
