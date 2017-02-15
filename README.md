@@ -12,15 +12,16 @@ foo
 │   └── b
 ├── baz
 └── qux
-    └── c
+    └── c⏎
+        d
 ```
 
 using code like this:
 
 ```python
-import operator
+from operator import itemgetter
 
-from tree_format import print_tree
+from tree_format import format_tree
 
 tree = (
     'foo', [
@@ -30,14 +31,13 @@ tree = (
         ]),
         ('baz', []),
         ('qux', [
-            ('c', []),
+            ('c\nd', []),
         ]),
     ],
 )
 
 print format_tree(
     tree, format_node=itemgetter(0), get_children=itemgetter(1))
-
 ```
 
 ## License
