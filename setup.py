@@ -14,12 +14,14 @@
 # limitations under the License.
 
 
+import codecs
 import os
 
 from setuptools import find_packages, setup
 
 
-with open(os.path.join(os.path.dirname(__file__), "README.md")) as readme:
+readme_path = os.path.join(os.path.dirname(__file__), "README.md")
+with codecs.open(readme_path, encoding='utf-8', errors='replace') as readme:
     long_description = readme.read()
 
 classifiers = [
