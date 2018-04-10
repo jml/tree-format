@@ -43,7 +43,7 @@ def _format_newlines(prefix, formatted_node, options):
     """
     replacement = u''.join([
         options.NEWLINE,
-        '\n',
+        u'\n',
         prefix])
     return formatted_node.replace(u'\n', replacement)
 
@@ -98,11 +98,11 @@ def format_ascii_tree(tree, format_node, get_children):
     return format_tree(tree,
                        format_node,
                        get_children,
-                       Options(FORK='|',
-                               LAST='+',
-                               VERTICAL='|',
-                               HORIZONTAL='-',
-                               NEWLINE='\n'))
+                       Options(FORK=u'|',
+                               LAST=u'+',
+                               VERTICAL=u'|',
+                               HORIZONTAL=u'-',
+                               NEWLINE=u'\n'))
 
 
 def print_tree(*args, **kwargs):
