@@ -156,7 +156,6 @@ class TestFormatTree(TestCase):
         '''), output)
 
 
-
 def d(name, files):
     return (name, files)
 
