@@ -35,6 +35,13 @@ class Options(object):
         self.NEWLINE = NEWLINE
 
 
+ASCII_OPTIONS = Options(FORK=u'|',
+                        LAST=u'+',
+                        VERTICAL=u'|',
+                        HORIZONTAL=u'-',
+                        NEWLINE=u'\n')
+
+
 def _format_newlines(prefix, formatted_node, options):
     """
     Convert newlines into U+23EC characters, followed by an actual newline and
@@ -84,10 +91,10 @@ def _format_tree(node, format_node, get_children, options, prefix=u''):
             yield result
 
 
-def format_tree(node, format_node, get_children, options=Options()):
+def format_tree(node, format_node, get_children, options=None):
     lines = itertools.chain(
         [format_node(node)],
-        _format_tree(node, format_node, get_children, options),
+        _format_tree(node, format_node, get_children, options or Options()),
         [u''],
     )
     return u'\n'.join(lines)
@@ -98,11 +105,7 @@ def format_ascii_tree(tree, format_node, get_children):
     return format_tree(tree,
                        format_node,
                        get_children,
-                       Options(FORK=u'|',
-                               LAST=u'+',
-                               VERTICAL=u'|',
-                               HORIZONTAL=u'-',
-                               NEWLINE=u'\n'))
+                       ASCII_OPTIONS)
 
 
 def print_tree(*args, **kwargs):
