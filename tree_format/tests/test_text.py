@@ -22,7 +22,7 @@ from testtools import TestCase
 from testtools.matchers import DocTestMatches
 
 from .._text import (
-    format_tree,
+    format_tree, format_ascii_tree,
 )
 
 
@@ -30,6 +30,9 @@ class TestFormatTree(TestCase):
 
     def format_tree(self, tree):
         return format_tree(tree, itemgetter(0), itemgetter(1))
+
+    def format_ascii_tree(self, tree):
+        return format_ascii_tree(tree, itemgetter(0), itemgetter(1))
 
     def test_single_node_tree(self):
         tree = ('foo', [])
@@ -129,6 +132,27 @@ class TestFormatTree(TestCase):
         ├── baz
         └── qux⏎
             frab
+        '''), output)
+
+    def test_ascii__tree(self):
+        tree = (
+            'foo', [
+                ('bar', [
+                    ('a', []),
+                    ('b', []),
+                ]),
+                ('baz', []),
+                ('qux', []),
+            ],
+        )
+        output = self.format_ascii_tree(tree)
+        self.assertEqual(dedent(u'''\
+        foo
+        |-- bar
+        |   |-- a
+        |   +-- b
+        |-- baz
+        +-- qux
         '''), output)
 
 
