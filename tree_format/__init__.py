@@ -15,6 +15,7 @@
 """Nicely format trees."""
 
 from ._text import (
+    format_ascii_tree,
     format_tree,
     print_tree,
 )
