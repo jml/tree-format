@@ -27,12 +27,14 @@ class Options(object):
                  LAST=u'\u2514',
                  VERTICAL=u'\u2502',
                  HORIZONTAL=u'\u2500',
-                 NEWLINE=u'\u23ce'):
+                 NEWLINE=u'\u23ce'
+                 INDENT=u'   '):
         self.FORK = FORK
         self.LAST = LAST
         self.VERTICAL = VERTICAL
         self.HORIZONTAL = HORIZONTAL
         self.NEWLINE = NEWLINE
+        self.INDENT = INDENT
 
 
 ASCII_OPTIONS = Options(FORK=u'|',
@@ -57,7 +59,7 @@ def _format_newlines(prefix, formatted_node, options):
 
 def _format_tree(node, format_node, get_children, options, prefix=u''):
     children = list(get_children(node))
-    next_prefix = u''.join([prefix, options.VERTICAL, u'   '])
+    next_prefix = u''.join([prefix, options.VERTICAL, options.INDENT])
     for child in children[:-1]:
         yield u''.join([prefix,
                         options.FORK,
@@ -74,7 +76,7 @@ def _format_tree(node, format_node, get_children, options, prefix=u''):
                                    next_prefix):
             yield result
     if children:
-        last_prefix = u''.join([prefix, u'    '])
+        last_prefix = u''.join([prefix, options.INDENT])
         yield u''.join([prefix,
                         options.LAST,
                         options.HORIZONTAL,
