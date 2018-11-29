@@ -27,7 +27,7 @@ class Options(object):
                  LAST=u'\u2514',
                  VERTICAL=u'\u2502',
                  HORIZONTAL=u'\u2500',
-                 NEWLINE=u'\u23ce'
+                 NEWLINE=u'\u23ce',
                  INDENT=u'   '):
         self.FORK = FORK
         self.LAST = LAST
