@@ -76,7 +76,7 @@ def _format_tree(node, format_node, get_children, options, prefix=u''):
                                    next_prefix):
             yield result
     if children:
-        last_prefix = u''.join([prefix, options.INDENT])
+        last_prefix = u''.join([prefix, options.INDENT+u' '])
         yield u''.join([prefix,
                         options.LAST,
                         options.HORIZONTAL,
