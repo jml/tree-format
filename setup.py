@@ -39,7 +39,7 @@ classifiers = [
 setup(
     name="tree-format",
     long_description=long_description,
-    version="0.1.0",
+    version="0.1.2",
     packages=find_packages(),
     author="Jonathan M. Lange",
     author_email="jml@mumak.net",
