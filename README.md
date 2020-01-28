@@ -36,8 +36,8 @@ tree = (
     ],
 )
 
-print format_tree(
-    tree, format_node=itemgetter(0), get_children=itemgetter(1))
+print(format_tree(
+    tree, format_node=itemgetter(0), get_children=itemgetter(1)))
 ```
 
 ## License
